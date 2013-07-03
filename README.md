@@ -103,3 +103,7 @@ lexy.on('alldone', function () {
 ## Example
 
 The example directory has a working example of lexing a *SUBSET* of JSON. 
+
+## Credits
+
+Pretty much all ideas come from the go template lexer which is detailed in [this excellent presentation](http://rspace.googlecode.com/hg/slide/lex.html).
