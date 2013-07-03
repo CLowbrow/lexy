@@ -36,3 +36,13 @@ test("Next function", function (t) {
   t.end();
 });
 
+test("Backup function", function (t) {
+  var lexy = Lexer(util.noChangeStates);
+  lexy.write('hello there');
+  lexy.end();
+  lexy.on('alldone', function () {
+    lexy.backUp();
+    t.equal(lexy.pos, 'hello there'.length - 1, "should have gone back 1");
+    t.end();
+  });
+});
