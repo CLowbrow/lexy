@@ -1,10 +1,9 @@
-var states = require('./states').states;
 var EventEmitter = require('events').EventEmitter;
 var Writable = require('stream').Writable;
 
 //Lexer can emit "token" events and the "alldone" event
 
-var Lexer = function () {
+var Lexer = function (states) {
 
   var lexy = Writable();
   lexy.inputArr = '';
@@ -23,7 +22,7 @@ var Lexer = function () {
       cached = false;
     }
     if(!started) {
-      states.lexStatement(lexy, done);
+      states[states.initial](lexy, done);
       started = true;
     }
     next();
@@ -118,9 +117,13 @@ var Lexer = function () {
 
   var done = function (nextState) {
     //break up the recursion chain
-    setImmediate(function () {
-      nextState(lexy, done);
-    });
+    if(nextState) {
+      setImmediate(function () {
+        nextState(lexy, done);
+      });
+    } else {
+      lexy.emit('alldone');
+    }
   }
 
   return lexy;
