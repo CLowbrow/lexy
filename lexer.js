@@ -50,17 +50,17 @@ var Lexer = function (states) {
   };
 
   lexy.next = function (callback) {
-      var rune = lexy.inputArr.charAt(lexy.pos);
-      if (rune) {
-        lexy.pos++;
-        callback(rune);
-      } else {
-        cached = true;
-        cachedCallback = callback;
-        if(finished) {
-          lexy.emit('alldone');
-        }
-      }
+    var rune = lexy.inputArr.charAt(lexy.pos);
+    if (rune) {
+      lexy.pos++;
+      callback(rune);
+    } else if (finished) {
+      //let states know we've hit EOF
+      callback(rune);
+    } else {
+      cached = true;
+      cachedCallback = callback;
+    }
   };
 
   lexy.backUp = function () {
