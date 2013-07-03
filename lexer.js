@@ -5,15 +5,18 @@ var Writable = require('stream').Writable;
 
 var Lexer = function (states) {
 
-  var lexy = Writable();
+  var lexy = Writable()
+    , cached = false
+    , started = false
+    , finished = false
+    , cachedCallback = function () {
+        console.log('something broke!');
+      };
+
+  // These two exposed for testing.
+  // Writing to them will make you sa
   lexy.inputArr = '';
   lexy.pos = 0;
-  var cached = false;
-  var started = false;
-  var finished = false;
-  var cachedCallback = function () {
-    console.log('something broke!');
-  }
 
   lexy._write = function (chunk, enc, next) {
     lexy.inputArr += chunk.toString();
@@ -32,9 +35,8 @@ var Lexer = function (states) {
     finished = true;
   });
 
-
   /* ----------------------------------------
-   *  PUBLIC METHODS
+   *  METHODS USABLE BY STATES
    * ---------------------------------------- */
 
   lexy.emitToken = function (type) {
@@ -113,11 +115,13 @@ var Lexer = function (states) {
     });
   };
 
-  /* This is the engine. Each state function returns the next state function */
+  /* This is the engine. Each state function calls done with the next state function
+   * or with false if we are done lexing
+   */
 
   var done = function (nextState) {
-    //break up the recursion chain
     if(nextState) {
+      //break up the recursion chain
       setImmediate(function () {
         nextState(lexy, done);
       });
