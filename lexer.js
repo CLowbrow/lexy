@@ -71,7 +71,7 @@ var Lexer = function (states) {
 
   lexy.ignore = function () {
     lexy.inputArr = lexy.inputArr.substring(lexy.pos)
-    lexy.pos = 0;
+    lexy.rewind();
   };
 
   lexy.rewind = function () {
@@ -114,6 +114,13 @@ var Lexer = function (states) {
       done();
     });
   };
+
+  lexy.ignoreUntil = function (string, done) {
+    lexy.acceptUntil(string, function() {
+      lexy.ignore()
+      done();
+    });
+  }
 
   /* This is the engine. Each state function calls done with the next state function
    * or with false if we are done lexing
