@@ -88,7 +88,7 @@ Will remove characters from the beginning of the internal buffer until it hits a
 
 ## Collecting output
 
-You will need to bind to the '**lexerToken**' and '**allDone**' events.
+You will need to bind to the **'lexerToken'** and **'allDone'** events.
 
 ```javascript
 var lexy = Lexer(states);
