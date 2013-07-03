@@ -1,0 +1,23 @@
+{
+  "name": "lexy",
+  "version": "0.0.0",
+  "description": "An extensible lexer",
+  "main": "lexer.js",
+  "scripts": {
+    "test": "tap test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/CLowbrow/lexy.git"
+  },
+  "keywords": [
+    "lexer"
+  ],
+  "author": "Alex Zelenskiy",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "gitHead": "af58189a0d2e5eb63249b074a5b6f5a186d68e69",
+  "devDependencies": {
+    "tap": "~0.4.3"
+  }
+}
